@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">WeatherForcast</string>
+    <string name="city_names">City Names</string>
+    <string name="search_city">Search country names</string>
+    <string name="units">Units</string>
+    <string name="dark_mode">Dark Mode</string>
+    <string name="settings">Settings</string>
+    <string name="language">Language</string>
+    <string name="fahrenheit">Fahrenheit °F</string>
+    <string name="celsius">Celsius °C</string>
+    <string name="kelvin">Kelvin °K</string>
+    <string name="location">Location</string>
+    <string name="search">Search</string>
+    <string name="max_temp">Max_Temp</string>
+    <string name="pressure">Pressure</string>
+    <string name="min_temp">Min_Temp</string>
+    <string name="humidity">Humidity</string>
+    <string name="feels_like">Feels_Like</string>
+    <string name="weather_icon">Weather icon</string>
+    <string name="clouds">Clouds</string>
+    <string name="description">Description</string>
+    <string name="fetch_data">Fetch Data</string>
+</resources>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_view.xml"
+    app:startDestination="@id/locationFragment">
+
+    <fragment
+        tools:layout="@layout/fragment_location"
+        android:id="@+id/locationFragment"
+        android:name="com.example.weatherforcast.ui.LocationFragment"
+        android:label="HomeFragment" >
+        <argument
+            android:name="countryName"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        tools:layout="@layout/fragment_search"
+        android:id="@+id/searchFragment"
+        android:name="com.example.weatherforcast.ui.SearchFragment"
+        android:label="SearchFragment" >
+        <action
+            android:id="@+id/action_searchFragment_to_locationFragment"
+            app:destination="@id/locationFragment" />
+    </fragment>
+    <fragment
+        tools:layout="@layout/fragment_settings"
+        android:id="@+id/settingsFragment"
+        android:name="com.example.weatherforcast.ui.SettingsFragment"
+        android:label="SettingsFragment" />
+</navigation>
