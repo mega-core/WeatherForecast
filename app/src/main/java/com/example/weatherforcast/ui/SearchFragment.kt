@@ -5,9 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.appcompat.widget.SearchView
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.weatherforcast.R
 import com.example.weatherforcast.core.Constants
@@ -42,7 +43,8 @@ class SearchFragment: Fragment(R.layout.fragment_search) {
                 if (countryList.contains(query)){
                     listAdapter.filter.filter(query)
                 }else{
-                    Toast.makeText(requireContext(), "No Match found ...", Toast.LENGTH_SHORT).show()
+                    val bundle = bundleOf("cityName" to query)
+                    view.findNavController().navigate(R.id.action_searchFragment_to_locationFragment, bundle)
                 }
                 return false
             }
@@ -65,4 +67,6 @@ class SearchFragment: Fragment(R.layout.fragment_search) {
         super.onDestroy()
         _binding = null
     }
+
+
 }

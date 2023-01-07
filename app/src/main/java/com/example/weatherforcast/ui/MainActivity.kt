@@ -96,6 +96,8 @@ class MainActivity : AppCompatActivity() {
     }
 
 
+
+     
     private fun dynamicBackground() {
         val constraintLayout: CoordinatorLayout = findViewById(R.id.main_layout)
         val animationDrawable: AnimationDrawable = constraintLayout.background as AnimationDrawable

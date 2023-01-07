@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.weatherforcast.R
-import com.example.weatherforcast.core.Constants
 import com.example.weatherforcast.data.query.DarkMode
 import com.example.weatherforcast.data.query.LanguageData
 import com.example.weatherforcast.data.query.Units
@@ -25,8 +24,6 @@ import dagger.hilt.android.AndroidEntryPoint
 class SettingsFragment : Fragment(R.layout.fragment_settings) {
     private lateinit var viewModel: SettingsViewModel
     private var _binding: FragmentSettingsBinding? = null
-    private var userLanguage: String? = null
-    private var userUnit: String? = null
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -57,19 +54,13 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                 .setItems(R.array.units_types) { _, i ->
                     when (i) {
                         0 -> {
-                            Constants.UNITS = "imperial"
-                            userUnit = "imperial"
                             viewModel.updateUserUnit(Units(unit = "imperial"))
 
                         }
                         1 -> {
-                            Constants.UNITS = "metric"
-                            userUnit = "metric"
                             viewModel.updateUserUnit(Units(unit = "metric"))
                         }
                         2 -> {
-                            Constants.UNITS = "standard"
-                            userUnit = "standard"
                             viewModel.updateUserUnit(Units(unit = "standard"))
                         }
                     }
@@ -91,8 +82,6 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
                 val language = adapterView.getItemAtPosition(i)
                 val item = languageCode[i]
                 Toast.makeText(view.context, "$language selected", Toast.LENGTH_SHORT).show()
-                Constants.LANG = item
-                userLanguage = item
                 viewModel.updateLanguage(LanguageData(language = item))
                 dialogLanguage.dismiss()
             }

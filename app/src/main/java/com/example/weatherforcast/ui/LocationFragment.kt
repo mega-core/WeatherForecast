@@ -42,6 +42,8 @@ class LocationFragment : Fragment(R.layout.fragment_location) {
     override fun onResume() {
         super.onResume()
 
+        val arg = arguments?.getString("cityName")
+
 
 
         Handler().postDelayed({
@@ -51,11 +53,14 @@ class LocationFragment : Fragment(R.layout.fragment_location) {
                 else
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
         }, 300)
-
         val circularProgressDrawable = CircularProgressDrawable(requireContext())
         circularProgressDrawable.strokeWidth = 5f
         circularProgressDrawable.centerRadius = 30f
         circularProgressDrawable.start()
+        if (arg != null)
+            searchWeather(arg.toString(),circularProgressDrawable)
+
+
 
 
         getCurrentLocationWeatherData(circularProgressDrawable)
@@ -66,7 +71,7 @@ class LocationFragment : Fragment(R.layout.fragment_location) {
 
 
         if (Constants.argumentCityName != null)
-            searchWeather(Constants.argumentCityName!!)
+            searchWeather(Constants.argumentCityName!!,circularProgressDrawable)
 
 
     }
@@ -86,7 +91,38 @@ class LocationFragment : Fragment(R.layout.fragment_location) {
                 Constants.API_KEY,
                 Constants.UNITS
             )
-            viewModel.getWeather.observe(viewLifecycleOwner) {
+            viewModel(circularProgressDrawable)
+
+        } catch (io: IOException) {
+            Toast.makeText(context, io.message.toString(), Toast.LENGTH_SHORT).show()
+        }
+    }
+
+
+    @SuppressLint("SetTextI18n")
+    private fun searchWeather(cityName: String,circularProgressDrawable: CircularProgressDrawable) {
+        try {
+
+            viewModel.setWeatherData(
+                Constants.UNITS,
+                Constants.API_KEY,
+                Constants.LANG,
+                cityName
+            )
+            viewModel(circularProgressDrawable)
+
+
+        } catch (io: IOException) {
+            Toast.makeText(this.context, io.message.toString(), Toast.LENGTH_SHORT).show()
+        } catch (ex: Exception) {
+            Toast.makeText(this.context, "", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun viewModel(circularProgressDrawable: CircularProgressDrawable){
+        viewModel.getWeather.observe(viewLifecycleOwner) {
+            if (it.body() != null) {
                 val data = it.body()!!
                 binding.homeFragmentTemperature.text =
                     "${data.main.temp.toInt()}"
@@ -108,45 +144,7 @@ class LocationFragment : Fragment(R.layout.fragment_location) {
                     .centerCrop()
                     .placeholder(circularProgressDrawable)
                     .into(binding.imageView)
-
-
             }
-        } catch (io: IOException) {
-            Toast.makeText(context, io.message.toString(), Toast.LENGTH_SHORT).show()
-        }
-    }
-
-
-    @SuppressLint("SetTextI18n")
-    private fun searchWeather(cityName: String) {
-        try {
-
-            viewModel.setWeatherData(
-                Constants.UNITS,
-                Constants.API_KEY,
-                Constants.LANG,
-                cityName
-            )
-
-            viewModel.getWeather.observe(viewLifecycleOwner) {
-                val data = it.body()!!
-                binding.homeFragmentTemperature.text =
-                    "${data.main.temp.toInt()}"
-                binding.cityNameTextView.text = data.name
-                binding.countryCodeTextView.text = data.sys.country
-                binding.feelsLikeTextView.text =
-                    "Feels Like: ${data.main.feels_like.toInt()}"
-                binding.humidityTextView.text = "Humidity: ${data.main.humidity}%"
-                binding.maxTempTextView.text =
-                    "Max Temperature: ${data.main.temp_max.toInt()}"
-                binding.minTempTextView.text =
-                    "Min Temperature: ${data.main.temp_min.toInt()}"
-                binding.pressureTextView.text = "Pressure: ${data.main.pressure}"
-                binding.cloudsTextView.text = data.weather[0].main
-                binding.descriptionTypeTextView.text = data.weather[0].description
-            }
-        } catch (io: IOException) {
-            Toast.makeText(context, io.message.toString(), Toast.LENGTH_SHORT).show()
         }
     }
 
