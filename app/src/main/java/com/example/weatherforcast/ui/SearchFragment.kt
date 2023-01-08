@@ -1,14 +1,14 @@
 package com.example.weatherforcast.ui
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.SearchView
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.weatherforcast.R
 import com.example.weatherforcast.core.Constants
@@ -39,12 +39,14 @@ class SearchFragment: Fragment(R.layout.fragment_search) {
         listAdapter = ArrayAdapter(requireContext(),R.layout.exposed_dropdown,countryList)
         binding.listView.adapter = listAdapter
         binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+
+            @RequiresApi(Build.VERSION_CODES.N)
             override fun onQueryTextSubmit(query: String?): Boolean {
                 if (countryList.contains(query)){
                     listAdapter.filter.filter(query)
                 }else{
-                    val bundle = bundleOf("cityName" to query)
-                    view.findNavController().navigate(R.id.action_searchFragment_to_locationFragment, bundle)
+                    Constants.argumentCityName = query
+                    findNavController().navigate(R.id.locationFragment)
                 }
                 return false
             }

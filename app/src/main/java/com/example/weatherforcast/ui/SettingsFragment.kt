@@ -42,13 +42,6 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
         viewModel = ViewModelProvider(this)[SettingsViewModel::class.java]
 
 
-        binding.darkModeLayoutButton.setOnClickListener {
-            if (!isDarkMode())
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-            if (isDarkMode())
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-        }
-
         binding.Units.setOnClickListener {
             MaterialAlertDialogBuilder(view.context)
                 .setItems(R.array.units_types) { _, i ->
@@ -105,13 +98,6 @@ class SettingsFragment : Fragment(R.layout.fragment_settings) {
 
         }
     }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putBoolean("isDark", isDarkMode())
-    }
-
-
 
     override fun onDestroy() {
         super.onDestroy()

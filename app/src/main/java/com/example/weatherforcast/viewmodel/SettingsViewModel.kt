@@ -14,6 +14,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 class SettingsViewModel(application: Application) : AndroidViewModel(application) {
+
     var allSettings: LiveData<List<SettingsDB>>? = null
     private val repository: SettingsRepository
 

@@ -11,6 +11,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
 import retrofit2.Response
+import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -28,6 +29,8 @@ class WeatherViewmodel @Inject constructor(
                 _getWeather.postValue(response)
             }catch (ex: Exception){
                 Log.d("TAG",ex.message.toString())
+            }catch (io: IOException){
+                Log.d("TAG",io.message.toString())
             }
         }
 
