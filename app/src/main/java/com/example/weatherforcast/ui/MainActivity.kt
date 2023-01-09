@@ -201,7 +201,7 @@ class MainActivity : AppCompatActivity() {
     @SuppressLint("SetTextI18n")
     private fun viewModel(circularProgressDrawable: CircularProgressDrawable) {
 
-        if (findViewById<TextView>(R.id.pressure_text_view) != null) {
+        if (findViewById<TextView>(R.id.imageView) != null) {
 
             val homeFragmentTemperature: TextView = findViewById(R.id.home_fragment_temperature)
             val cityNameTextView: TextView = findViewById(R.id.city_name_text_view)
